@@ -25,7 +25,7 @@ test.serial('invalid lope-script should exit 2', async t => {
 
 test.serial('valid run which exits non-0 should exit non-0', async t => {
 	try {
-		await shell(`${cli} lope-example invalid`);
+		await shell(`${cli} lope-example false`);
 		t.fail();
 	} catch (err) {
 		t.not(err.code, 0);
