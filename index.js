@@ -21,7 +21,8 @@ Options:
   --lope-script	  The script to run (default: undefined)
 
 Examples:
-  $ ${name} meow test
+  $ ${name} lope-example test
+  $ ${name} lope-example echo --echo hello
 `);
 
 const pkg = defaultTo(cli.input[0], cli.flags.lopePackage);
