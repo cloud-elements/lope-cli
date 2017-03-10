@@ -29,6 +29,7 @@ Examples:
   $ lope lope-example test
   $ lope lope-example echo --echo hello
 ```
+> __PROTIP:__ Options prefixed with `lope` will be filtered and not passed to the NPM script
 
 ## Maintainers
 * Rocky Madden ([@rockymadden](https://github.com/rockymadden))
