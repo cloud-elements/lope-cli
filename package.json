@@ -1,0 +1,43 @@
+{
+  "description": "Third-party NPM package scripts as simple CLIs",
+  "devDependencies": {
+    "ava": "0.18.x",
+    "npm-check": "5.x",
+    "nyc": "10.x",
+    "xo": "0.17.x"
+  },
+  "engines": {"node": ">=7.6.0"},
+  "homepage": "https://github.com/cloud-elements/lope-cli",
+  "keywords": [
+    "cli",
+    "npm",
+    "package",
+    "packages",
+    "script",
+    "scripts"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "lope-cli",
+  "nyc": {
+    "branches": 100,
+    "functions": 100,
+    "lines": 100,
+    "statements": 100
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cloud-elements/lope-cli.git"
+  },
+  "scripts": {
+    "clean": "rm -rf .nyc_output && rm -rf coverage && rm -rf node_modules",
+    "cover": "nyc report --reporter=text-lcov",
+    "coverage": "nyc report --reporter=lcov && open ./coverage/lcov-report/index.html",
+    "depend": "npm-check",
+    "lint": "xo",
+    "test": "{ npm run depend || true; } && npm run lint && npm run unit",
+    "unit": "nyc --check-coverage ava"
+  },
+  "version": "0.0.0",
+  "xo": {"esnext": true}
+}
