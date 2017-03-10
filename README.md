@@ -14,7 +14,22 @@ $ npm install --global lope-cli
 ## Usage
 ```bash
 $ lope --help
+Third-party NPM package scripts as simple CLIs
+
+Usage:
+  $ lope <lope-package> <lope-script> [--lope-path path] [--* <*>]
+
+Options:
+  --lope-package  The package to run against (default: undefined)
+  --lope-path     The path containing the package in node_modules (default: current directory or the
+                  nearest ancestor node_modules directory)
+  --lope-script	  The script to run (default: undefined)
+
+Examples:
+  $ lope lope-example test
+  $ lope lope-example echo --echo hello
 ```
+> __PROTIP:__ Options prefixed with `lope` will be filtered and not passed to the NPM script
 
 ## Maintainers
 * Rocky Madden ([@rockymadden](https://github.com/rockymadden))
