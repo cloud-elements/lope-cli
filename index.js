@@ -6,7 +6,7 @@ const {shell} = require('execa');
 const findup = require('findup-sync');
 const meow = require('meow');
 const {
-  allPass, always, apply, complement, defaultTo, filter, ifElse, is, isEmpty, isNil, map, pipe, toPairs
+	allPass, always, apply, complement, defaultTo, filter, ifElse, is, isEmpty, isNil, map, pipe, toPairs
 } = require('ramda');
 
 const name = 'lope';
