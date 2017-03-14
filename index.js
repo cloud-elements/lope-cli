@@ -60,16 +60,16 @@ const exec = async (pkg, script, options, global) => {
 
 exec(pkg, script, filterFlags(require('minimist')(process.argv.slice(4))), global)
 	.then(result => {
-    /* istanbul ignore next */
+		/* istanbul ignore next */
 		process.stdout.write(result.stdout ? (format(result.stdout) + '\n') : '');
-    /* istanbul ignore next */
+		/* istanbul ignore next */
 		process.stderr.write(result.stderr ? (format(result.stderr) + '\n') : '');
 		process.exit(0);
 	})
 	.catch(err => {
-    /* istanbul ignore next */
+		/* istanbul ignore next */
 		process.stdout.write(err.stdout ? (format(err.stdout) + '\n') : '');
-    /* istanbul ignore next */
+		/* istanbul ignore next */
 		process.stderr.write(err.stderr ? (format(err.stderr) + '\n') : '');
 		process.exit(err.code);
 	});
