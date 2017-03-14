@@ -5,18 +5,18 @@ const {shell} = require('execa');
 
 const cli = './index.js';
 
-test.serial('invalid lope-package should exit 2', async t => {
+test.serial('invalid package should exit 2', async t => {
 	try {
-		await shell(`${cli} --lope-package`);
+		await shell(`${cli}`);
 		t.fail();
 	} catch (err) {
 		t.is(err.code, 2);
 	}
 });
 
-test.serial('invalid lope-script should exit 2', async t => {
+test.serial('invalid script should exit 2', async t => {
 	try {
-		await shell(`${cli} lope-example --lope-script`);
+		await shell(`${cli} lope-example`);
 		t.fail();
 	} catch (err) {
 		t.is(err.code, 2);
@@ -40,9 +40,5 @@ test.serial('argumented valid run which exits 0 should exit 0', async t => {
 	const ran = await shell(`${cli} lope-example echo --echo hello`);
 
 	t.is(ran.code, 0);
-	t.true(ran.stdout.indexOf('hello') >= 0);
-});
-
-test.serial('explicit lope-path run which exits 0 should exit 0', async t => {
-	t.is((await shell(`${cli} lope-example true --lope-path .`)).code, 0);
+	t.is(ran.stdout, 'hello');
 });

@@ -2,11 +2,13 @@
   "bin": {"lope": "index.js"},
   "dependencies": {
     "execa": "0.6.x",
-    "findup-sync": "0.4.x",
+    "lope": "0.0.x",
     "meow": "3.x",
-    "ramda": "0.23.x"
+    "minimist": "1.x",
+    "ramda": "0.23.x",
+    "sanctuary": "0.12.x"
   },
-  "description": "Third-party NPM package scripts as simple CLIs",
+  "description": "Transform NPM package scripts into simple CLIs",
   "devDependencies": {
     "ava": "0.18.x",
     "lope-example": "0.0.x",
@@ -14,7 +16,7 @@
     "nyc": "10.x",
     "xo": "0.17.x"
   },
-  "engines": {"node": ">=7.6.0"},
+  "engines": {"node": "^7.6.0"},
   "homepage": "https://github.com/cloud-elements/lope-cli",
   "keywords": [
     "cli",

@@ -1,35 +1,33 @@
 #!/usr/bin/env node
 'use strict';
 
-const {join} = require('path');
+const {format} = require('util');
 const {shell} = require('execa');
-const findup = require('findup-sync');
 const meow = require('meow');
 const {
-	allPass, always, apply, complement, defaultTo, filter, ifElse, is, isEmpty, isNil, map, pipe, toPairs
+  allPass, always, apply, complement, defaultTo, equals, filter, fromPairs, ifElse, is, isEmpty, isNil, pipe, toPairs
 } = require('ramda');
+const {create, env} = require('sanctuary');
+
+const {fromEither} = create({checkTypes: false, env});
 
 const name = 'lope';
 const cli = meow(`
 Usage:
-  $ ${name} <lope-package> <lope-script> [--lope-path path] [--* <*>]
+  $ ${name} <package> <script> [--global|-g] [--* <*>]
 
 Options:
-  --lope-package  The package to run against (default: undefined)
-  --lope-path     The path containing the package in node_modules (default: current directory or the
-                  nearest ancestor node_modules directory)
-  --lope-script	  The script to run (default: undefined)
+  --global, -g   Indicates the package is installed globally, not locally
 
 Examples:
-  $ ${name} lope-example test
+  $ ${name} lope-example true
+  $ ${name} lope-example false
   $ ${name} lope-example echo --echo hello
-`);
+`, {alias: {g: 'global'}});
 
-const pkg = defaultTo(cli.input[0], cli.flags.lopePackage);
-const scr = defaultTo(cli.input[1], cli.flags.lopeScript);
-const pth = cli.flags.lopePath;
-
-const modules = pth ? findup('node_modules', {cwd: pth}) : findup('node_modules');
+const pkg = cli.input[0];
+const script = cli.input[1];
+const global = defaultTo(false, cli.flags.global);
 
 const isNotEmpty = complement(isEmpty);
 const isNotNil = complement(isNil);
@@ -39,33 +37,39 @@ const validOption = allPass([
 	isNotEmpty,
 	is(String)
 ]);
-const validArg = allPass([validOption, key => !key.startsWith('lope')]);
-const validModules = validOption;
 const validPackage = validOption;
 const validScript = validOption;
 
-const parseArg = (key, value) => `${key}:${value}`;
+const filterFlags = pipe(
+  toPairs,
+  filter(apply(key => !(key === '_' || key === 'g' || key === 'global'))),
+  fromPairs
+);
 
-if (!validPackage(pkg) || !validScript(scr) || !validModules(modules)) {
+if (!validPackage(pkg) || !validScript(script)) {
 	cli.showHelp(2);
 }
 
-const path = join(modules, pkg);
-const argsArray = pipe(toPairs, filter(apply(validArg)), map(apply(parseArg)), as => as.join(' '))(cli.flags);
-const argsString = ifElse(
-	isEmpty,
-	always(''),
-	args => ` -- ${args}`
-)(argsArray);
-const cmd = `cd '${path}' && npm run ${scr}${argsString}`;
+const exec = async (pkg, script, options, global) => {
+	const npmRootCmd = ifElse(equals(true), always('npm root -g'), always('npm root'))(global);
+	const npmRoot = (await shell(npmRootCmd)).stdout;
+	const lope = require('lope')(shell, npmRoot);
 
-shell(cmd)
+	return fromEither(null)(lope(pkg, script, options));
+};
+
+exec(pkg, script, filterFlags(require('minimist')(process.argv.slice(4))), global)
 	.then(result => {
-		process.stdout.write(result.stdout);
+    /* istanbul ignore next */
+		process.stdout.write(result.stdout ? (format(result.stdout) + '\n') : '');
+    /* istanbul ignore next */
+		process.stderr.write(result.stderr ? (format(result.stderr) + '\n') : '');
 		process.exit(0);
 	})
 	.catch(err => {
-		process.stdout.write(err.stdout);
-		process.stderr.write(err.stderr);
+    /* istanbul ignore next */
+		process.stdout.write(err.stdout ? (format(err.stdout) + '\n') : '');
+    /* istanbul ignore next */
+		process.stderr.write(err.stderr ? (format(err.stderr) + '\n') : '');
 		process.exit(err.code);
 	});
