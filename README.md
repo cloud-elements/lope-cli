@@ -24,7 +24,7 @@ $ lope lope-example echo --echo hello
 hello
 ```
 
-### Against locally installed package leveraging `npm config` via the command line:
+### Against locally installed package, leveraging `npm config`, via the command line:
 ```bash
 $ npm install lope-example
 $ npm config set lope-example:echo hello
@@ -39,7 +39,7 @@ $ lope lope-example echo --echo hello --global
 hello
 ```
 
-### Against globally installed package leveraging `npm config` via the command line:
+### Against globally installed package, leveraging `npm config`, via the command line:
 ```bash
 $ npm install --global lope-example
 $ npm config set lope-example:echo hello
