@@ -1,4 +1,4 @@
-## v0.1.0 <sub><sup>(TBD)</sup></sub>
+## v0.1.0 <sub><sup>(2017-03-17)</sup></sub>
 * Use `lope` package as a dependency for heavy lifting
 * Mirror `npm` behavior regarding locally vs globally installed packages
   * Easily run against globally installed packages by adding `--global` option
