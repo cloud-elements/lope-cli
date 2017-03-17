@@ -16,17 +16,28 @@ const {fromEither} = create({checkTypes: false, env});
 const name = 'lope';
 const cli = meow(`
 Usage:
-  $ ${name} [package] <script> [--global|-g] [--* <*>]
+  $ ${name} [package] <script> [--* <*>]
 
 Options:
-  --global, -g  Indicates the package is installed globally
+  --global, -g  Indicates package is installed globally
 
 Examples:
+  $ # Run the test script against current package
   $ ${name} test
+
+  $ # Run the test script against local package
   $ ${name} lope-example test
+
+  $ # Run the test script against global package
   $ ${name} lope-example test --global
+
+  $ # Run the echo script, with options, against current package
   $ ${name} echo --echo hello
+
+  $ # Run the echo script, with options, against local package
   $ ${name} lope-example echo --echo hello
+
+  $ # Run the echo script, with options, against global package
   $ ${name} lope-example echo --echo hello --global
 `, {alias: {g: 'global'}});
 
