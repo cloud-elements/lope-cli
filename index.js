@@ -64,7 +64,7 @@ if (!validPackage(pkg) || !validScript(script)) {
 	cli.showHelp(2);
 }
 
-const exec = async (pkg, script, options, glb) => {
+const run = async (pkg, script, options, glb) => {
 	const rootCmd = cond([
 		[pipe(nthArg(0), isNil), always('cd $(npm root) && cd .. && pwd')],
 		[pipe(nthArg(1), equals(true)), always('npm root -g')],
@@ -81,7 +81,7 @@ const exec = async (pkg, script, options, glb) => {
 	return fromEither(null)(lope(root, pack, script, options));
 };
 
-exec(pkg, script, filterFlags(options), glb)
+run(pkg, script, filterFlags(options), glb)
 	.then(result => {
 		process.stdout.write(result.stdout ? (format(result.stdout) + '\n') : '');
 		/* istanbul ignore next */
