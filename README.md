@@ -17,37 +17,42 @@ $ npm install --global lope-cli
 ```
 
 ## Usage
-### Against locally installed package via the command line:
+```bash
+Transform NPM package scripts into simple CLIs
+
+Usage:
+  $ lope [package] <script> [--global|-g] [--* <*>]
+
+Options:
+  --global, -g  Indicates the package is installed globally
+
+Examples:
+  $ lope test
+  $ lope lope-example test
+  $ lope lope-example test --global
+  $ lope echo --echo hello
+  $ lope lope-example echo --echo hello
+  $ lope lope-example echo --echo hello --global
+```
+
+### Local package via the command line:
 ```bash
 $ npm install lope-example
+$ lope lope-example test
 $ lope lope-example echo --echo hello
 hello
 ```
 
-### Against locally installed package, leveraging `npm config`, via the command line:
+### Local package, leveraging `npm config`, via the command line:
 ```bash
 $ npm install lope-example
 $ npm config set lope-example:echo hello
+$ lope lope-example test
 $ lope lope-example echo
 hello
 ```
 
-### Against globally installed package via the command line:
-```bash
-$ npm install --global lope-example
-$ lope lope-example echo --echo hello --global
-hello
-```
-
-### Against globally installed package, leveraging `npm config`, via the command line:
-```bash
-$ npm install --global lope-example
-$ npm config set lope-example:echo hello
-$ lope lope-example echo --global
-hello
-```
-
-### Against locally installed package via project NPM script:
+### Local package via NPM script:
 ```json
 {
   "devDependencies": {
@@ -55,13 +60,66 @@ hello
     "lope-example": "0.0.x"
   },
   "scripts": {
-    "echo": "lope lope-example echo --echo hello"
+    "echo": "lope lope-example echo --echo hello",
+    "test": "lope lope-example test"
   }
 }
 ```
 
 ```bash
+$ npm run test
 $ npm run echo
+hello
+```
+
+### Global package via the command line:
+```bash
+$ npm install --global lope-example
+$ lope lope-example test --global
+$ lope lope-example echo --echo hello --global
+hello
+```
+
+### Global package, leveraging `npm config`, via the command line:
+```bash
+$ npm install --global lope-example
+$ npm config set lope-example:echo hello
+$ lope lope-example test --global
+$ lope lope-example echo --global
+hello
+```
+
+### Self-referencing package via the command line:
+```json
+{
+  "scripts": {
+    "echo": "echo ${npm_package_config_echo}",
+    "test": "true"
+  }
+}
+```
+
+```bash
+$ lope test
+$ lope echo --echo hello
+hello
+```
+
+### Self-referencing package via NPM script:
+```json
+{
+  "devDependencies": {
+    "lope-cli": "0.0.x"
+  },
+  "scripts": {
+    "echo": "echo ${npm_package_config_echo}",
+    "echo2": "lope echo --echo hello"
+  }
+}
+```
+
+```bash
+$ npm run echo2
 hello
 ```
 

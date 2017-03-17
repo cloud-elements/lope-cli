@@ -2,7 +2,7 @@
   "bin": {"lope": "index.js"},
   "dependencies": {
     "execa": "0.6.x",
-    "lope": "0.0.x",
+    "lope": "0.1.x",
     "meow": "3.x",
     "minimist": "1.x",
     "ramda": "0.23.x",
@@ -44,9 +44,12 @@
     "cover": "nyc report --reporter=text-lcov",
     "coverage": "nyc report --reporter=lcov && open ./coverage/lcov-report/index.html",
     "depend": "npm-check --ignore lope-example",
+    "echo": "echo ${npm_package_config_echo}",
+    "false": "false",
     "lint": "xo",
     "test": "{ npm run depend || true; } && npm run lint && npm run unit",
-    "unit": "nyc --check-coverage ava"
+    "true": "true",
+    "unit": "npm install --global lope-example && nyc --check-coverage ava && npm uninstall --global lope-example"
   },
   "version": "0.1.0",
   "xo": {"esnext": true}
