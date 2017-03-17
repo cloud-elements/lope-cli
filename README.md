@@ -17,6 +17,24 @@ $ npm install --global lope-cli
 ```
 
 ## Usage
+```bash
+Transform NPM package scripts into simple CLIs
+
+Usage:
+  $ lope [package] <script> [--global|-g] [--* <*>]
+
+Options:
+  --global, -g  Indicates the package is installed globally
+
+Examples:
+  $ lope test
+  $ lope lope-example test
+  $ lope lope-example test --global
+  $ lope echo --echo hello
+  $ lope lope-example echo --echo hello
+  $ lope lope-example echo --echo hello --global
+```
+
 ### Local package via the command line:
 ```bash
 $ npm install lope-example
