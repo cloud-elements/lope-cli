@@ -2,7 +2,7 @@
   "bin": {"lope": "index.js"},
   "dependencies": {
     "execa": "0.6.x",
-    "lope": "0.0.x",
+    "lope": "0.1.x",
     "meow": "3.x",
     "minimist": "1.x",
     "ramda": "0.23.x",
