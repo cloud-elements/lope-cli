@@ -1,3 +1,6 @@
+## v0.2.1 <sub><sup>(2017-03-17)</sup></sub>
+* Update `--help`
+
 ## v0.2.0 <sub><sup>(2017-03-16)</sup></sub>
 * Add self-referencing package support
 
