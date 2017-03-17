@@ -51,6 +51,6 @@
     "true": "true",
     "unit": "npm install --global lope-example && nyc --check-coverage ava && npm uninstall --global lope-example"
   },
-  "version": "0.2.0",
+  "version": "0.2.1",
   "xo": {"esnext": true}
 }
