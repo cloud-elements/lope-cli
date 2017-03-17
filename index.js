@@ -41,27 +41,15 @@ Examples:
   $ ${name} lope-example echo --echo hello --global
 `, {alias: {g: 'global'}});
 
-const pkg = ifElse(
-	pipe(length, equals(1)),
-	always(null),
-	nth(0)
-)(cli.input);
-const script = ifElse(
-	pipe(length, equals(2)),
-	nth(1),
-	nth(0)
-)(cli.input);
+const pkg = ifElse(pipe(length, equals(1)), always(null), nth(0))(cli.input);
+const script = ifElse(pipe(length, equals(2)), nth(1), nth(0))(cli.input);
 const options = minimist(process.argv.slice(2 + length(cli.input)));
 const glb = defaultTo(false, cli.flags.global);
 
 const isNotEmpty = complement(isEmpty);
 const isNotNil = complement(isNil);
 
-const validOption = allPass([
-	isNotNil,
-	isNotEmpty,
-	is(String)
-]);
+const validOption = allPass([isNotNil, isNotEmpty, is(String)]);
 const validPackage = either(isNil, validOption);
 const validScript = validOption;
 
