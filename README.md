@@ -20,6 +20,7 @@ $ npm install --global lope-cli
 ### Local package via the command line:
 ```bash
 $ npm install lope-example
+$ lope lope-example test
 $ lope lope-example echo --echo hello
 hello
 ```
@@ -28,6 +29,7 @@ hello
 ```bash
 $ npm install lope-example
 $ npm config set lope-example:echo hello
+$ lope lope-example test
 $ lope lope-example echo
 hello
 ```
@@ -40,12 +42,14 @@ hello
     "lope-example": "0.0.x"
   },
   "scripts": {
-    "echo": "lope lope-example echo --echo hello"
+    "echo": "lope lope-example echo --echo hello",
+    "test": "lope lope-example test"
   }
 }
 ```
 
 ```bash
+$ npm run test
 $ npm run echo
 hello
 ```
@@ -53,6 +57,7 @@ hello
 ### Global package via the command line:
 ```bash
 $ npm install --global lope-example
+$ lope lope-example test --global
 $ lope lope-example echo --echo hello --global
 hello
 ```
@@ -61,6 +66,7 @@ hello
 ```bash
 $ npm install --global lope-example
 $ npm config set lope-example:echo hello
+$ lope lope-example test --global
 $ lope lope-example echo --global
 hello
 ```
@@ -69,12 +75,14 @@ hello
 ```json
 {
   "scripts": {
-    "echo": "echo ${npm_package_config_echo}"
+    "echo": "echo ${npm_package_config_echo}",
+    "test": "true"
   }
 }
 ```
 
 ```bash
+$ lope test
 $ lope echo --echo hello
 hello
 ```
