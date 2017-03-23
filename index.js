@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
+const {join} = require('path');
 const {format} = require('util');
 const {shell} = require('execa');
 const meow = require('meow');
@@ -73,7 +74,7 @@ const run = async (pkg, script, options, glb) => {
 	const lope = require('lope')(shell);
 	const pack = ifElse(
 		isNil,
-		() => require('./package').name,
+		() => require(join(process.cwd(), 'package.json')).name,
 		identity
 	)(pkg);
 
