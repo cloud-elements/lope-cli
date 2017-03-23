@@ -23,7 +23,7 @@ test('invalid script should exit 2', async t => {
 	}
 });
 
-test('self-referencing package valid run which exits non-0 should exit non-0', async t => {
+test('current package valid run which exits non-0 should exit non-0', async t => {
 	try {
 		await shell(`${cli} false`);
 		t.fail();
@@ -32,14 +32,18 @@ test('self-referencing package valid run which exits non-0 should exit non-0', a
 	}
 });
 
-test('self-referencing package non-argumented valid run which exits 0 should exit 0', async t => {
+test('current package non-optioned valid run which exits 0 should exit 0', async t => {
 	t.is((await shell(`${cli} true`)).code, 0);
 });
 
-test('self-referencing package argumented valid run which exits 0 should exit 0', async t => {
-	const ran = await shell(`${cli} echo --echo hello`);
+test('current package optioned valid run which exits 0 should exit 0', async t => {
+	const ran = await shell(`${cli} equals --input input`);
 	t.is(ran.code, 0);
-	t.is(ran.stdout, 'hello');
+});
+
+test('current package multi-optioned valid run which exits 0 should exit 0', async t => {
+	const ran = await shell(`${cli} equalsBoth --input0 input0 --input1 input1`);
+	t.is(ran.code, 0);
 });
 
 test('local package valid run which exits non-0 should exit non-0', async t => {
@@ -51,14 +55,18 @@ test('local package valid run which exits non-0 should exit non-0', async t => {
 	}
 });
 
-test('local package non-argumented valid run which exits 0 should exit 0', async t => {
+test('local package non-optioned valid run which exits 0 should exit 0', async t => {
 	t.is((await shell(`${cli} lope-example true`)).code, 0);
 });
 
-test('local package argumented valid run which exits 0 should exit 0', async t => {
-	const ran = await shell(`${cli} lope-example echo --echo hello`);
+test('local package optioned valid run which exits 0 should exit 0', async t => {
+	const ran = await shell(`${cli} lope-example equals --input input`);
 	t.is(ran.code, 0);
-	t.is(ran.stdout, 'hello');
+});
+
+test('local package multi-optioned valid run which exits 0 should exit 0', async t => {
+	const ran = await shell(`${cli} lope-example equalsBoth --input0 input0 --input1 input1`);
+	t.is(ran.code, 0);
 });
 
 test('global package valid run which exits non-0 should exit non-0', async t => {
@@ -70,12 +78,16 @@ test('global package valid run which exits non-0 should exit non-0', async t => 
 	}
 });
 
-test('global package non-argumented valid run which exits 0 should exit 0', async t => {
+test('global package non-optioned valid run which exits 0 should exit 0', async t => {
 	t.is((await shell(`${cli} lope-example true --global`)).code, 0);
 });
 
-test('global package argumented valid run which exits 0 should exit 0', async t => {
-	const ran = await shell(`${cli} lope-example echo --echo hello --global`);
+test('global package optioned valid run which exits 0 should exit 0', async t => {
+	const ran = await shell(`${cli} lope-example equals --input input --global`);
 	t.is(ran.code, 0);
-	t.is(ran.stdout, 'hello');
+});
+
+test('global package multi-optioned valid run which exits 0 should exit 0', async t => {
+	const ran = await shell(`${cli} lope-example equalsBoth --input0 input0 --input1 input1 --global`);
+	t.is(ran.code, 0);
 });

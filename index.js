@@ -2,8 +2,8 @@
 'use strict';
 
 const {join} = require('path');
-const {format} = require('util');
 const {shell} = require('execa');
+const lope = require('lope');
 const meow = require('meow');
 const minimist = require('minimist');
 const {
@@ -71,7 +71,6 @@ const run = async (pkg, script, options, glb) => {
 		[T, always('npm root')]
 	])(pkg, glb);
 	const root = (await shell(rootCmd)).stdout;
-	const lope = require('lope')(shell);
 	const pack = ifElse(
 		isNil,
 		() => require(join(process.cwd(), 'package.json')).name,
@@ -82,16 +81,5 @@ const run = async (pkg, script, options, glb) => {
 };
 
 run(pkg, script, filterFlags(options), glb)
-	.then(result => {
-		process.stdout.write(result.stdout ? (format(result.stdout) + '\n') : '');
-		/* istanbul ignore next */
-		process.stderr.write(result.stderr ? (format(result.stderr) + '\n') : '');
-		process.exit(0);
-	})
-	.catch(err => {
-		/* istanbul ignore next */
-		process.stdout.write(err.stdout ? (format(err.stdout) + '\n') : '');
-		/* istanbul ignore next */
-		process.stderr.write(err.stderr ? (format(err.stderr) + '\n') : '');
-		process.exit(err.code);
-	});
+	.then(() => process.exit(0))
+	.catch(err => process.exit(err.code));
