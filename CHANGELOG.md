@@ -1,4 +1,7 @@
-## v0.2.1 <sub><sup>(2017-03-22)</sup></sub>
+## v0.2.3 <sub><sup>(2017-03-23)</sup></sub>
+* Refactor to stream stdout and stderr
+
+## v0.2.2 <sub><sup>(2017-03-22)</sup></sub>
 * Fix `cwd` path detection when run against current package
 
 ## v0.2.1 <sub><sup>(2017-03-17)</sup></sub>
