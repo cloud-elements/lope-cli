@@ -14,7 +14,7 @@
     "lope-example": "0.0.x",
     "npm-check": "5.x",
     "nyc": "10.x",
-    "xo": "0.17.x"
+    "xo": "0.18.x"
   },
   "engines": {"node": "^7.6.0"},
   "homepage": "https://github.com/cloud-elements/lope-cli",
@@ -47,10 +47,15 @@
     "echo": "echo ${npm_package_config_echo}",
     "false": "false",
     "lint": "xo",
+    "postunit": "npm uninstall --global lope-example",
+    "preunit": "npm install --global lope-example",
     "test": "{ npm run depend || true; } && npm run lint && npm run unit",
     "true": "true",
-    "unit": "npm install --global lope-example && nyc --check-coverage ava && npm uninstall --global lope-example"
+    "unit": "nyc --check-coverage ava"
   },
   "version": "0.2.1",
-  "xo": {"esnext": true}
+  "xo": {
+    "esnext": true,
+    "rules": {"import/no-dynamic-require": 0}
+  }
 }

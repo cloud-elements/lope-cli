@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
+const {join} = require('path');
 const {format} = require('util');
 const {shell} = require('execa');
 const meow = require('meow');
@@ -65,7 +66,7 @@ if (!validPackage(pkg) || !validScript(script)) {
 
 const run = async (pkg, script, options, glb) => {
 	const rootCmd = cond([
-		[pipe(nthArg(0), isNil), always('cd $(npm root) && cd .. && pwd')],
+		[pipe(nthArg(0), isNil), always('npm prefix')],
 		[pipe(nthArg(1), equals(true)), always('npm root -g')],
 		[T, always('npm root')]
 	])(pkg, glb);
@@ -73,7 +74,7 @@ const run = async (pkg, script, options, glb) => {
 	const lope = require('lope')(shell);
 	const pack = ifElse(
 		isNil,
-		() => require('./package').name,
+		() => require(join(process.cwd(), 'package.json')).name,
 		identity
 	)(pkg);
 
