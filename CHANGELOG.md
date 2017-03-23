@@ -1,3 +1,6 @@
+## v0.2.1 <sub><sup>(2017-03-22)</sup></sub>
+* Fix `cwd` path detection when run against current package
+
 ## v0.2.1 <sub><sup>(2017-03-17)</sup></sub>
 * Update `--help`
 
