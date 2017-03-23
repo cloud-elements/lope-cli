@@ -66,7 +66,7 @@ if (!validPackage(pkg) || !validScript(script)) {
 
 const run = async (pkg, script, options, glb) => {
 	const rootCmd = cond([
-		[pipe(nthArg(0), isNil), always('cd $(npm root) && cd .. && pwd')],
+		[pipe(nthArg(0), isNil), always('npm prefix')],
 		[pipe(nthArg(1), equals(true)), always('npm root -g')],
 		[T, always('npm root')]
 	])(pkg, glb);
